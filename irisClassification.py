@@ -100,6 +100,7 @@ pyplot.show()
 
 # Data suggests SVM is most accurate model
 # Make predictions on validation dataset
+#
 model = SVC(gamma='auto')
 model.fit(x_train, y_train)
 predictions = model.predict(x_validation)
