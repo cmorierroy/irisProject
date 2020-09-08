@@ -2,6 +2,8 @@
 
 This is a project to get familiar with basic Python data science tools and get an easy refresher on supervised learning.
 
+It uses the iris dataset and compares the accuracy of 6 different ML algorithms, concludes that SVM is the most accurate one and prints results. Some visualization with matplotlib is also performed.
+
 Taken from https://machinelearningmastery.com/machine-learning-in-python-step-by-step/.
 
 ## Dependencies Required/Steps to Build:
