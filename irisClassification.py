@@ -63,3 +63,48 @@ x_train, x_validation, y_train, y_validation = train_test_split(
     x, y, test_size=0.20, random_state=1)
 
 # use 10-fold cross validation to estimate model accuracy
+
+# Spot check algorithms
+models = []
+
+# Logistic regression
+models.append(('LR', LogisticRegression(
+    solver='liblinear', multi_class='ovr')))
+# Linear Discriminant Analysis
+models.append(('LDA', LinearDiscriminantAnalysis()))
+# K-Nearest Neighbors
+models.append(('KNN', KNeighborsClassifier()))
+# Classification and regression trees
+models.append(('CART', DecisionTreeClassifier()))
+# Gaussian Naive Bayes
+models.append(('NB', GaussianNB()))
+# Support Vector Machines
+models.append(('SVM', SVC(gamma='auto')))
+
+# evaluate each model in turn
+results = []
+names = []
+for name, model in models:
+    kfold = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
+    cv_results = cross_val_score(
+        model, x_train, y_train, cv=kfold, scoring='accuracy')
+    results.append(cv_results)
+    names.append(name)
+    print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
+
+
+# Compare algorithms
+pyplot.boxplot(results, labels=names)
+pyplot.title('Algorithm Comparison')
+pyplot.show()
+
+# Data suggests SVM is most accurate model
+# Make predictions on validation dataset
+model = SVC(gamma='auto')
+model.fit(x_train, y_train)
+predictions = model.predict(x_validation)
+
+# Evaluate predictions
+print(accuracy_score(y_validation, predictions))
+print(confusion_matrix(y_validation, predictions))
+print(classification_report(y_validation, predictions))
